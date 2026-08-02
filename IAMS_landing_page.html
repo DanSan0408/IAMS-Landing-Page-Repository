@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IAMS — Multi-perspective assessment, managed in one place</title>
+  <meta name="description"
+    content="IAMS runs any rubric- or checklist-based assessment across self, peer, group, and assessor evaluations — computing individual contribution, returning feedback, and producing auditable outcome evidence." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #2A1015;
+      --ink-2: #5C2430;
+      --deep: #1D080D;
+      --teal: #7C1F2E;
+      --teal-d: #57131E;
+      --teal-tint: #F8E8EA;
+      --amber: #C79A3D;
+      --amber-d: #A57A26;
+      --amber-tint: #FBF2DC;
+      --surface: #FAF6F3;
+      --surface-2: #F1E5E3;
+      --white: #fff;
+      --muted: #7C6469;
+      --line: #E7D9D7;
+      --line-2: #D6C1BF;
+      --display: 'Space Grotesk', sans-serif;
+      --body: 'Inter', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --wrap: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--body);
+      color: var(--ink);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -.02em
+    }
+
+    .wrap {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 0 24px
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 500
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 0 0 rgba(199, 154, 61, .5);
+      animation: dotPulse 2.2s ease-in-out infinite
+    }
+
+    .who .eyebrow::before {
+      background: var(--amber)
+    }
+
+    @keyframes dotPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(199, 154, 61, .5)
+      }
+
+      70% {
+        box-shadow: 0 0 0 6px rgba(199, 154, 61, 0)
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(199, 154, 61, 0)
+      }
+    }
+
+    .eyebrow .n {
+      color: var(--line-2);
+      margin-right: 10px
+    }
+
+    /* buttons */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 13px 22px;
+      border-radius: 10px;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      white-space: nowrap;
+      overflow: hidden
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -60%;
+      width: 40%;
+      background: linear-gradient(115deg, transparent, rgba(255, 255, 255, .55), transparent);
+      transform: skewX(-18deg);
+      transition: left .55s ease
+    }
+
+    .btn:hover::before {
+      left: 130%
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #3a250a;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 0 0 0 rgba(199, 154, 61, .5);
+      animation: ctaGlow 2.8s ease-in-out infinite
+    }
+
+    .btn-primary:hover {
+      background: var(--amber-d);
+      color: #fff;
+      transform: translateY(-1px)
+    }
+
+    @keyframes ctaGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 0 0 0 rgba(199, 154, 61, .45)
+      }
+
+      50% {
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 0 0 7px rgba(199, 154, 61, 0)
+      }
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--line-2);
+      color: var(--ink)
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--ink);
+      transform: translateY(-1px)
+    }
+
+    .btn-teal {
+      background: var(--teal);
+      color: #fff
+    }
+
+    .btn-teal:hover {
+      background: var(--teal-d);
+      transform: translateY(-1px)
+    }
+
+    /* nav */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, .85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .nav-in {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 84px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -.01em
+    }
+
+    .brand .mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: var(--ink);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      padding: 5px
+    }
+
+    .brand .mark i {
+      background: var(--teal);
+      border-radius: 1px;
+      display: block
+    }
+
+    .brand .mark i:nth-child(1) {
+      background: var(--amber)
+    }
+
+    .brand-logo {
+      height: 64px;
+      width: auto;
+      display: block;
+      object-fit: contain
+    }
+
+    footer .brand-logo {
+      height: 72px;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px
+    }
+
+    .nav-links a {
+      position: relative;
+      font-size: 14.5px;
+      color: var(--muted);
+      font-weight: 500;
+      padding-bottom: 3px
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--amber);
+      transition: right .28s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .nav-links a:hover {
+      color: var(--ink)
+    }
+
+    .nav-links a:hover::after {
+      right: 0
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .nav-cta .btn {
+      padding: 9px 16px;
+      font-size: 14px
+    }
+
+    .burger {
+      display: none;
+      background: none;
+      border: 1px solid var(--line-2);
+      border-radius: 8px;
+      width: 40px;
+      height: 38px;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      justify-content: center
+    }
+
+    .burger span {
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      display: block
+    }
+
+    /* hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(1100px 500px at 82% -8%, var(--teal-tint), transparent 60%),
+        linear-gradient(180deg, var(--white), var(--surface))
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 44px 44px;
+      opacity: .35;
+      mask-image: linear-gradient(180deg, #000, transparent 75%);
+      -webkit-mask-image: linear-gradient(180deg, #000, transparent 75%)
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      right: -180px;
+      top: -220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--amber-tint) 0%, transparent 68%);
+      opacity: .8;
+      animation: driftBlob 14s ease-in-out infinite;
+      pointer-events: none
+    }
+
+    @keyframes driftBlob {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1)
+      }
+
+      50% {
+        transform: translate(-40px, 50px) scale(1.08)
+      }
+    }
+
+    .hero-in {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center;
+      padding: 78px 0 88px
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 4.6vw, 56px);
+      font-weight: 700;
+      margin: 18px 0 20px
+    }
+
+    .hero h1 .u {
+      background: linear-gradient(100deg, var(--teal) 20%, var(--amber-d) 45%, var(--teal) 70%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 5s ease-in-out infinite
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+
+      100% {
+        background-position: 0% 50%
+      }
+    }
+
+    .hero p.lead {
+      font-size: 19px;
+      color: var(--ink-2);
+      max-width: 38ch;
+      margin-bottom: 30px
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    .hero-note {
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted)
+    }
+
+    /* hero matrix card (signature) */
+    .matrix {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 24px 60px -28px rgba(45, 10, 18, .35);
+      padding: 20px;
+      position: relative;
+      animation: floatCard 6s ease-in-out infinite;
+      transition: box-shadow .25s ease, transform .25s ease
+    }
+
+    .matrix:hover {
+      box-shadow: 0 30px 70px -26px rgba(45, 10, 18, .42);
+      animation-play-state: paused;
+      transform: translateY(-4px)
+    }
+
+    @keyframes floatCard {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-9px)
+      }
+    }
+
+    .matrix .mhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px
+    }
+
+    .matrix .mhead b {
+      font-family: var(--display);
+      font-size: 15px
+    }
+
+    .matrix .mhead .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 3px 8px;
+      border-radius: 20px
+    }
+
+    .roles {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap
+    }
+
+    .role {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 20px;
+      background: var(--surface-2);
+      color: var(--ink-2)
+    }
+
+    .role.on {
+      background: var(--teal);
+      color: #fff
+    }
+
+    /* animated rating-click demo */
+    .demo-stage {
+      position: relative;
+      padding: 4px 2px 0
+    }
+
+    .demo-q {
+      margin-bottom: 18px
+    }
+
+    .demo-qlabel {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 5px
+    }
+
+    .demo-q p {
+      font-size: 13.5px;
+      color: var(--ink-2);
+      font-weight: 500;
+      margin-bottom: 10px;
+      line-height: 1.35
+    }
+
+    .rate-row {
+      display: flex;
+      gap: 8px
+    }
+
+    .rate-pill {
+      position: relative;
+      flex: 1;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--ink-2);
+      transition: none
+    }
+
+    .rate-pill.hit1 {
+      animation: fillR1 6.4s ease-in-out infinite
+    }
+
+    .rate-pill.hit1::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 10px;
+      border: 2px solid var(--teal);
+      opacity: 0;
+      animation: ringPulse 6.4s ease-in-out infinite
+    }
+
+    .rate-pill.hit2 {
+      animation: fillR2 6.4s ease-in-out infinite
+    }
+
+    .rate-pill.hit2::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 10px;
+      border: 2px solid var(--amber);
+      opacity: 0;
+      animation: ringPulse2 6.4s ease-in-out infinite
+    }
+
+    .demo-comment {
+      border: 1px dashed var(--line-2);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      color: var(--ink-2)
+    }
+
+    .demo-comment .c-label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px
+    }
+
+    .demo-comment .caret {
+      display: inline-block;
+      width: 1px;
+      margin-left: 1px;
+      color: var(--teal);
+      animation: blink 1s steps(1) infinite
+    }
+
+    .demo-cursor {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      top: 8px;
+      left: 4%;
+      filter: drop-shadow(0 3px 5px rgba(45, 10, 18, .35));
+      animation: cursorMove 6.4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 3
+    }
+
+    @keyframes cursorMove {
+      0% {
+        top: 8px;
+        left: 4%;
+        opacity: 0
+      }
+
+      6% {
+        opacity: 1
+      }
+
+      22%,
+      31% {
+        top: 78px;
+        left: 66%
+      }
+
+      26% {
+        top: 78px;
+        left: 66%;
+        transform: scale(.82)
+      }
+
+      50%,
+      59% {
+        top: 190px;
+        left: 26%
+      }
+
+      54% {
+        top: 190px;
+        left: 26%;
+        transform: scale(.82)
+      }
+
+      94% {
+        top: 190px;
+        left: 26%;
+        opacity: 1
+      }
+
+      100% {
+        top: 8px;
+        left: 4%;
+        opacity: 0
+      }
+    }
+
+    @keyframes fillR1 {
+
+      0%,
+      24% {
+        background: var(--surface-2);
+        border-color: var(--line);
+        color: var(--ink-2)
+      }
+
+      31%,
+      92% {
+        background: var(--teal);
+        border-color: var(--teal-d);
+        color: #fff
+      }
+
+      97%,
+      100% {
+        background: var(--surface-2);
+        border-color: var(--line);
+        color: var(--ink-2)
+      }
+    }
+
+    @keyframes fillR2 {
+
+      0%,
+      52% {
+        background: var(--surface-2);
+        border-color: var(--line);
+        color: var(--ink-2)
+      }
+
+      59%,
+      92% {
+        background: var(--amber);
+        border-color: var(--amber-d);
+        color: #fff
+      }
+
+      97%,
+      100% {
+        background: var(--surface-2);
+        border-color: var(--line);
+        color: var(--ink-2)
+      }
+    }
+
+    @keyframes ringPulse {
+
+      0%,
+      25% {
+        opacity: 0;
+        transform: scale(.9)
+      }
+
+      31% {
+        opacity: .55;
+        transform: scale(1)
+      }
+
+      42% {
+        opacity: 0;
+        transform: scale(1.18)
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes ringPulse2 {
+
+      0%,
+      53% {
+        opacity: 0;
+        transform: scale(.9)
+      }
+
+      59% {
+        opacity: .55;
+        transform: scale(1)
+      }
+
+      70% {
+        opacity: 0;
+        transform: scale(1.18)
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @keyframes blink {
+
+      0%,
+      45% {
+        opacity: 1
+      }
+
+      50%,
+      100% {
+        opacity: 0
+      }
+    }
+
+    .mfoot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line-2)
+    }
+
+    .chip {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line)
+    }
+
+    .chip b {
+      color: var(--teal)
+    }
+
+    .chip.amber b {
+      color: var(--amber-d)
+    }
+
+    /* section scaffolding */
+    section {
+      padding: 84px 0
+    }
+
+    .sec-head {
+      max-width: 640px;
+      margin-bottom: 44px
+    }
+
+    .sec-head h2 {
+      font-size: clamp(26px, 3.2vw, 38px);
+      margin: 14px 0 14px
+    }
+
+    .sec-head p {
+      font-size: 17.5px;
+      color: var(--muted)
+    }
+
+    .center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center
+    }
+
+    /* problem */
+    .problem {
+      background: var(--surface)
+    }
+
+    .problem .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 48px;
+      align-items: center
+    }
+
+    .pains {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border-left: 2px solid var(--line-2);
+      padding-left: 0
+    }
+
+    .pain {
+      padding: 16px 0 16px 22px;
+      border-left: 2px solid transparent;
+      margin-left: -2px;
+      transition: border-color .2s
+    }
+
+    .pain:hover {
+      border-color: var(--amber)
+    }
+
+    .pain b {
+      font-family: var(--display);
+      font-size: 16px;
+      display: block;
+      margin-bottom: 2px
+    }
+
+    .pain span {
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    /* connected flow diagram */
+    .flow {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 44px
+    }
+
+    .flow-line {
+      position: absolute;
+      top: 26px;
+      left: 6%;
+      right: 6%;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--line-2) 0 8px, transparent 8px 14px);
+      z-index: 0;
+      overflow: visible
+    }
+
+    .flow-line::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 0 4px var(--amber-tint);
+      animation: travel 5s cubic-bezier(.65, 0, .35, 1) infinite
+    }
+
+    @keyframes travel {
+      0% {
+        left: 0;
+        opacity: 0
+      }
+
+      6% {
+        opacity: 1
+      }
+
+      92% {
+        opacity: 1
+      }
+
+      100% {
+        left: calc(100% - 10px);
+        opacity: 0
+      }
+    }
+
+    .flow-node {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 6px
+    }
+
+    .flow-dot {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--teal);
+      color: var(--teal);
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      box-shadow: 0 0 0 6px var(--white);
+      transition: transform .2s ease, background .2s ease, color .2s ease
+    }
+
+    .flow-node:hover .flow-dot {
+      background: var(--teal);
+      color: #fff;
+      transform: scale(1.1)
+    }
+
+    .flow-node h3 {
+      font-size: 17px;
+      margin-bottom: 8px
+    }
+
+    .flow-node p {
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    /* features */
+    .feat {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .card {
+      position: relative;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 26px 24px;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--amber));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease
+    }
+
+    .card:hover {
+      transform: translateY(-4px) rotate(-.3deg);
+      box-shadow: 0 18px 40px -24px rgba(45, 10, 18, .4);
+      border-color: var(--line-2)
+    }
+
+    .card:hover::before {
+      transform: scaleX(1)
+    }
+
+    .card .ico {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--teal-tint);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      color: var(--teal);
+      transition: transform .3s ease, background .3s ease, color .3s ease
+    }
+
+    .card:hover .ico {
+      background: var(--teal);
+      color: #fff;
+      transform: scale(1.1) rotate(-6deg)
+    }
+
+    .card .ico svg {
+      width: 21px;
+      height: 21px
+    }
+
+    .card h3 {
+      font-size: 17.5px;
+      margin-bottom: 8px
+    }
+
+    .card p {
+      font-size: 14.5px;
+      color: var(--muted)
+    }
+
+    .card .code {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--line-2);
+      position: absolute
+    }
+
+    /* screenshots */
+    .shots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .shot-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s
+    }
+
+    .shot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px -24px rgba(45, 10, 18, .4);
+      border-color: var(--line-2)
+    }
+
+    .shot-card .image-placeholder {
+      transition: transform .4s ease
+    }
+
+    .shot-card:hover .image-placeholder {
+      transform: scale(1.04)
+    }
+
+    .image-placeholder {
+      aspect-ratio: 16/10;
+      background:
+        repeating-linear-gradient(135deg, var(--surface-2) 0 10px, var(--surface) 10px 20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .image-placeholder svg {
+      width: 32px;
+      height: 32px;
+      opacity: .55
+    }
+
+    .image-placeholder span {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    .shot-meta {
+      padding: 16px 18px
+    }
+
+    .shot-meta b {
+      font-family: var(--display);
+      font-size: 15.5px;
+      display: block;
+      margin-bottom: 4px
+    }
+
+    .shot-meta span {
+      font-size: 13.5px;
+      color: var(--muted)
+    }
+
+    /* who */
+    .who {
+      background: var(--deep);
+      color: #F5E9E9
+    }
+
+    .who .sec-head h2 {
+      color: #fff
+    }
+
+    .who .sec-head p {
+      color: #C9A6AC
+    }
+
+    .who .eyebrow {
+      color: var(--amber)
+    }
+
+    .tag-group {
+      margin-top: 30px
+    }
+
+    .tag-group:first-of-type {
+      margin-top: 0
+    }
+
+    .tag-group h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 500;
+      margin-bottom: 12px
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .tags span {
+      display: inline-block;
+      font-size: 14px;
+      padding: 9px 15px;
+      border: 1px solid #4A2028;
+      border-radius: 30px;
+      color: #E7D2D2;
+      background: rgba(255, 255, 255, .02);
+      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease
+    }
+
+    .tags span:hover {
+      border-color: var(--amber);
+      background: var(--amber);
+      color: #3a250a;
+      transform: translateY(-2px) scale(1.04)
+    }
+
+    /* proof */
+    .proof .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin: 0 0 40px
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px 20px;
+      background: var(--surface)
+    }
+
+    .stat .num {
+      font-family: var(--display);
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1
+    }
+
+    .stat .lab {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 8px
+    }
+
+    .proof .band {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 24px;
+      align-items: stretch
+    }
+
+    .provenance {
+      background: var(--ink);
+      color: #F3E6E6;
+      border-radius: 16px;
+      padding: 30px
+    }
+
+    .provenance h3 {
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 14px
+    }
+
+    .provenance ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .provenance li {
+      display: flex;
+      gap: 12px;
+      font-size: 14.5px;
+      color: #E0C7C9
+    }
+
+    .provenance li b {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--amber);
+      min-width: 52px
+    }
+
+    .quote {
+      border: 1px dashed var(--line-2);
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--surface)
+    }
+
+    .quote .q {
+      font-family: var(--display);
+      font-size: 19px;
+      color: var(--ink-2);
+      line-height: 1.4
+    }
+
+    .quote .ph {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 16px;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    /* control strip */
+    .control {
+      position: relative;
+      overflow: hidden;
+      background: var(--teal);
+      color: #FBEDE9
+    }
+
+    .control::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -30%;
+      width: 30%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .09), transparent);
+      transform: skewX(-14deg);
+      animation: bannerSweep 7s ease-in-out infinite
+    }
+
+    @keyframes bannerSweep {
+      0% {
+        left: -30%
+      }
+
+      60%,
+      100% {
+        left: 120%
+      }
+    }
+
+    .control .wrap {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap
+    }
+
+    .control h2 {
+      color: #fff;
+      font-size: clamp(22px, 2.6vw, 30px);
+      max-width: 22ch
+    }
+
+    .control p {
+      color: #F0D6D0;
+      max-width: 40ch;
+      font-size: 16px
+    }
+
+    /* roadmap */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px
+    }
+
+    .roadmap-card {
+      border: 1.5px dashed var(--line-2);
+      border-radius: 14px;
+      padding: 28px 26px;
+      transition: border-color .2s ease, transform .2s ease, background .2s ease
+    }
+
+    .roadmap-card:hover {
+      border-color: var(--amber);
+      border-style: solid;
+      background: var(--amber-tint);
+      transform: translateY(-3px) scale(1.01)
+    }
+
+    .roadmap-card .soon {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--amber-d);
+      background: var(--amber-tint);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 14px
+    }
+
+    .roadmap-card h3 {
+      font-size: 18.5px;
+      margin-bottom: 8px
+    }
+
+    .roadmap-card p {
+      font-size: 14.5px;
+      color: var(--muted)
+    }
+
+    /* pricing + cta */
+    .cta-sec {
+      background: var(--surface)
+    }
+
+    .cta-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 44px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      box-shadow: 0 30px 70px -40px rgba(45, 10, 18, .4)
+    }
+
+    .cta-card .lead-col h2 {
+      font-size: clamp(26px, 3vw, 34px);
+      margin: 12px 0 14px
+    }
+
+    .cta-card .lead-col p {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 22px
+    }
+
+    .price-line {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px
+    }
+
+    .price-line .p {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 600
+    }
+
+    .price-line .s {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .f-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-bottom: 6px;
+      display: block
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      font-family: var(--body);
+      font-size: 15px;
+      padding: 12px 14px;
+      border: 1px solid var(--line-2);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--ink)
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px var(--teal-tint)
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 74px
+    }
+
+    .f-note {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted)
+    }
+
+    /* footer */
+    footer {
+      background: var(--deep);
+      color: #C9A6AC;
+      padding: 52px 0 34px
+    }
+
+    footer .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding-bottom: 28px;
+      border-bottom: 1px solid #3A1620
+    }
+
+    footer .brand {
+      color: #fff
+    }
+
+    footer .brand .mark {
+      background: #0c1a26
+    }
+
+    footer a {
+      color: #C9A6AC
+    }
+
+    footer a:hover {
+      color: #fff
+    }
+
+    footer .cols {
+      display: flex;
+      gap: 56px;
+      flex-wrap: wrap
+    }
+
+    footer .col h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #8C6870;
+      margin-bottom: 12px;
+      font-weight: 500
+    }
+
+    footer .col a,
+    footer .col span {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px
+    }
+
+    footer .legal {
+      padding-top: 24px;
+      font-size: 12.5px;
+      color: #8C6870;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap
+    }
+
+    footer .legal .ip {
+      font-family: var(--mono)
+    }
+
+    /* reveal */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    .js .reveal.in {
+      opacity: 1;
+      transform: none
+    }
+
+    /* responsive */
+    @media(max-width:900px) {
+      .hero-in {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 56px 0 64px
+      }
+
+      .matrix {
+        max-width: 460px
+      }
+
+      .problem .grid {
+        grid-template-columns: 1fr;
+        gap: 34px
+      }
+
+      .flow {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 32px
+      }
+
+      .flow-line {
+        display: none
+      }
+
+      .feat {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .shots {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .proof .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .proof .band {
+        grid-template-columns: 1fr
+      }
+
+      .cta-card {
+        grid-template-columns: 1fr;
+        padding: 32px
+      }
+
+      .nav-links {
+        display: none
+      }
+    }
+
+    @media(max-width:560px) {
+      .feat {
+        grid-template-columns: 1fr
+      }
+
+      .shots {
+        grid-template-columns: 1fr
+      }
+
+      .flow {
+        grid-template-columns: 1fr
+      }
+
+      .proof .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .f-row {
+        grid-template-columns: 1fr
+      }
+
+      .roadmap-grid {
+        grid-template-columns: 1fr
+      }
+
+      .burger {
+        display: flex
+      }
+
+      .nav-cta .btn-ghost {
+        display: none
+      }
+
+      section {
+        padding: 62px 0
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      .js .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="#top" aria-label="IAMS home">
+        <img src="IAMS_logo2.png" alt="IAMS — Integrated Assessment Management System" class="brand-logo" />
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#who">Who it's for</a>
+        <a href="#proof">Proof</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="#pricing">Pricing</a>
+        <a class="btn btn-primary" href="#request">Request a demo</a>
+        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <a id="top"></a>
+
+  <!-- HERO -->
+  <section class="hero" style="padding:0">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <span class="eyebrow">Multi-perspective assessment platform</span>
+        <h1>Every marker, every rubric, <span class="u">one honest mark.</span></h1>
+        <p class="lead">Self, peers, and assessors each grade through their own rich rubric — sub-criteria, direct
+          ratings, and open comments — while a contribution factor rewards students who pull their weight and marks
+          down the ones who don't.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#request">Request a demo</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <p class="hero-note">Multiple roles · Complex rubrics · Built-in comments · Rewards and penalises fairly</p>
+      </div>
+
+      <div class="matrix reveal" aria-hidden="true">
+        <div class="mhead">
+          <b>Peer Assessment · Team 04</b>
+          <span class="tag">live demo</span>
+        </div>
+        <div class="roles">
+          <span class="role on">Self</span>
+          <span class="role on">Peer</span>
+          <span class="role on">Group</span>
+          <span class="role on">Assessor</span>
+        </div>
+
+        <div class="demo-stage">
+          <svg class="demo-cursor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 2.4 18.6 9l-6.1 1.9-2 6.1L4 2.4z" fill="#2A1015" stroke="#fff" stroke-width="1.3"
+              stroke-linejoin="round" />
+          </svg>
+
+          <div class="demo-q">
+            <span class="demo-qlabel">Q2 · Direct rating</span>
+            <p>Contributed effectively to the mechanical design work</p>
+            <div class="rate-row">
+              <span class="rate-pill">1</span>
+              <span class="rate-pill">2</span>
+              <span class="rate-pill">3</span>
+              <span class="rate-pill hit1">4</span>
+              <span class="rate-pill">5</span>
+            </div>
+          </div>
+
+          <div class="demo-q">
+            <span class="demo-qlabel">Q3 · Sub-rubric</span>
+            <p>Communicated proactively with the rest of the team</p>
+            <div class="rate-row">
+              <span class="rate-pill">1</span>
+              <span class="rate-pill hit2">2</span>
+              <span class="rate-pill">3</span>
+              <span class="rate-pill">4</span>
+              <span class="rate-pill">5</span>
+            </div>
+          </div>
+
+          <div class="demo-comment">
+            <span class="c-label">Comment</span>
+            Delivered the gearbox redesign a week early<span class="caret">|</span>
+          </div>
+        </div>
+
+        <div class="mfoot">
+          <span class="chip">factor <b style="color:var(--teal-d)">1.08 ▲ reward</b></span>
+          <span class="chip amber">factor <b style="color:var(--amber-d)">0.86 ▼ penalty</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="wrap">
+      <div class="grid">
+        <div class="sec-head reveal" style="margin-bottom:0">
+          <span class="eyebrow">The problem</span>
+          <h2>Great assessment is hard to run.</h2>
+          <p>Projects, presentations, portfolios, and peer review capture what exams cannot. But they are heavy to
+            operate — and the logistics, not the pedagogy, are where courses get stuck.</p>
+        </div>
+        <div class="pains reveal">
+          <div class="pain"><b>Too many markers to coordinate</b><span>Self, peers, and one or more assessors, each on
+              their own rubric and their own deadline.</span></div>
+          <div class="pain"><b>Individual effort disappears</b><span>One shared team mark hides who actually
+              contributed.</span></div>
+          <div class="pain"><b>Feedback arrives too late</b><span>Comments reach students after the work is already
+              done.</span></div>
+          <div class="pain"><b>Evidence assembled by hand</b><span>Outcome attainment reconciled across spreadsheets,
+              every term.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION + PIPELINE -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The platform</span>
+        <h2>IAMS does the running. You keep the judgement.</h2>
+        <p>Configure any assessment you can express as a rubric or checklist. IAMS collects the marks from every
+          evaluator, reveals individual contribution, returns feedback, supports moderation, and exports auditable
+          outcome evidence.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-line" aria-hidden="true"></div>
+        <div class="flow-node reveal">
+          <div class="flow-dot">1</div>
+          <h3>Configure</h3>
+          <p>Set your assessment occasions, evaluator roles, and rubrics.</p>
+        </div>
+        <div class="flow-node reveal">
+          <div class="flow-dot">2</div>
+          <h3>Evaluate</h3>
+          <p>Each evaluator marks through their own rubric or checklist.</p>
+        </div>
+        <div class="flow-node reveal">
+          <div class="flow-dot">3</div>
+          <h3>Compute</h3>
+          <p>IAMS aggregates marks and applies the contribution factor — you moderate.</p>
+        </div>
+        <div class="flow-node reveal">
+          <div class="flow-dot">4</div>
+          <h3>Deliver</h3>
+          <p>Students receive feedback; you export outcome evidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What you get</span>
+        <h2>Everything a multi-marker assessment needs.</h2>
+        <p>One configurable engine, set up entirely by you — no fixed template, no discipline lock-in.</p>
+      </div>
+      <div class="feat">
+        <div class="card reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18M3 15h18M9 3v18" />
+            </svg></div>
+          <h3>Configurable rubrics</h3>
+          <p>Mix sub-rubrics, direct ratings, and comment questions on the same rubric, and reuse a saved blueprint to
+            spin up a new one in a click.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <circle cx="9" cy="8" r="3" />
+              <circle cx="17" cy="10" r="2.4" />
+              <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 1-3.6 2.5-4.6" />
+            </svg></div>
+          <h3>As many markers as you need</h3>
+          <p>Assign assessors by group, by rubric, or by individual student — self, peer, and group assessments are
+            configured per student, per assessment.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="M12 3v18M5 10l7-5 7 5M6 21h12" />
+            </svg></div>
+          <h3>Individual accountability</h3>
+          <p>A self-and-peer contribution factor reveals who contributed to a team mark — computed transparently, and
+            always yours to override.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg></div>
+          <h3>Feedback that reaches students</h3>
+          <p>Self, peer, and group comments are returned to students in one unified view, with peer identities kept
+            anonymous.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-7" />
+            </svg></div>
+          <h3>Transparent from raw to final</h3>
+          <p>Trace every mark through averaging and weighting, moderate any result, and export the full tabulation to
+            Excel-ready CSV.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg></div>
+          <h3>Progress tracking &amp; reminders</h3>
+          <p>Watch completion for every assessor and student on one dashboard, with automatic email alerts when an
+            assessment opens or its deadline is approaching.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO -->
+  <section class="who" id="who">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Who it's for</span>
+        <h2>If you can write a rubric, IAMS can run it.</h2>
+        <p>Any discipline, anywhere — IAMS handles any human-evaluated assessment you can express as a rubric or
+          checklist.</p>
+      </div>
+      <div class="tag-group reveal">
+        <h4>Projects &amp; assessments</h4>
+        <div class="tags">
+          <span>Design &amp; capstone projects</span>
+          <span>Final year projects</span>
+          <span>Group coursework</span>
+          <span>Presentations</span>
+          <span>Posters &amp; exhibitions</span>
+          <span>Reports</span>
+          <span>Portfolios</span>
+          <span>Reflective journals</span>
+          <span>Studio critiques</span>
+          <span>Observed &amp; practical exams</span>
+          <span>Internships &amp; industrial training</span>
+          <span>Clinical &amp; practicum placements</span>
+          <span>Competency checklists</span>
+          <span>Peer &amp; self review</span>
+        </div>
+      </div>
+      <div class="tag-group reveal">
+        <h4>Where it's used</h4>
+        <div class="tags">
+          <span>Universities &amp; polytechnics</span>
+          <span>Technical &amp; vocational colleges</span>
+          <span>Engineering &amp; accreditation programmes</span>
+          <span>Healthcare &amp; clinical training providers</span>
+          <span>Architecture &amp; design schools</span>
+          <span>Industrial training &amp; internship providers</span>
+          <span>Corporate learning &amp; development</span>
+          <span>Professional certification bodies</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section id="screenshots" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">See it in action</span>
+        <h2>Every portal, purpose-built for the role using it.</h2>
+        <p>A quick look at three core workspaces inside IAMS — from the admin's live dashboard to the student's own view
+          of their marks. Swap in your real screenshots any time by replacing the <code>.image-placeholder</code> blocks
+          below.</p>
+      </div>
+      <div class="shots">
+        <div class="shot-card reveal">
+          <div class="image-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-7" />
+            </svg>
+            <span>Admin Image
+              <img src="/images/admin_home.png" alt="Admin Image" style="display: block;" />
+            </span>
+          </div>
+          <div class="shot-meta"><b>Admin dashboard</b><span>Course-scoped setup, progress tracking, and data exports
+              at a glance.</span></div>
+        </div>
+        <div class="shot-card reveal">
+          <div class="image-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18M9 15h6M9 12h3" />
+            </svg>
+            <span>Assesor Image
+              <img src="/images/assessor_home.png" alt="Assesor Image" style="display: block;" />
+            </span>
+          </div>
+          <div class="shot-meta"><b>Assessor workspace</b><span>Granular rubric grading with group and individual
+              evaluation tracking.</span></div>
+        </div>
+        <div class="shot-card reveal">
+          <div class="image-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="9" cy="8" r="3" />
+              <circle cx="17" cy="10" r="2.4" />
+              <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 1-3.6 2.5-4.6" />
+            </svg>
+            <span>Student Image
+              <img src="/images/student_home.png" alt="Student Image" style="display: block;" />
+            </span>
+          </div>
+          <div class="shot-meta"><b>Student portal</b><span>Self, peer, and group assessment in one dedicated
+              view.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="proof" id="proof">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Proven in practice</span>
+        <h2>Built and tested in a real, high-stakes course.</h2>
+        <p>IAMS was first deployed to manage the complete assessment of an engineering capstone — every perspective, in
+          one system.</p>
+      </div>
+      <div class="stats">
+        <div class="stat reveal">
+          <div class="num" data-count="47">0</div>
+          <div class="lab">students assessed</div>
+        </div>
+        <div class="stat reveal">
+          <div class="num" data-count="34">0</div>
+          <div class="lab">evaluators, overlapping roles</div>
+        </div>
+        <div class="stat reveal">
+          <div class="num" data-count="4">0</div>
+          <div class="lab">evaluator perspectives</div>
+        </div>
+        <div class="stat reveal">
+          <div class="num" data-count="1">0</div>
+          <div class="lab">auditable outcome record</div>
+        </div>
+      </div>
+      <div class="band">
+        <div class="provenance reveal">
+          <h3>A tested foundation, not a prototype</h3>
+          <ul>
+            <li><b>2021</b><span>Assessment framework registered as copyright (IP/CR/00663).</span></li>
+            <li><b>2022</b><span>Multi-perspective approach presented at NALI 2022.</span></li>
+            <li><b>2026</b><span>IAMS software released under copyright (IP/CR/08479).</span></li>
+          </ul>
+        </div>
+        <div class="quote reveal">
+          <div class="q">&ldquo;Placeholder for a real quote from a lecturer or student — added once early users share
+            their experience.&rdquo;</div>
+          <div class="ph">Your name here · Your institution</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTROL STRIP -->
+  <section class="control">
+    <div class="wrap">
+      <h2>You stay in control of every mark.</h2>
+      <p>IAMS proposes; you moderate and approve. Your rubrics, your decisions, your data — the platform does the work,
+        never the judging.</p>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What's next</span>
+        <h2>Built to grow with your programme.</h2>
+        <p>IAMS is under active development. Here's what's coming next to deepen the insight you get from every
+          assessment.</p>
+      </div>
+      <div class="roadmap-grid">
+        <div class="roadmap-card reveal">
+          <span class="soon">Coming soon</span>
+          <h3>Advanced data analytics</h3>
+          <p>Cohort comparisons, attainment trends across terms, and configurable dashboards that go beyond today's
+            spreadsheet exports.</p>
+        </div>
+        <div class="roadmap-card reveal">
+          <span class="soon">Coming soon</span>
+          <h3>AI-based assessment analysis</h3>
+          <p>AI-assisted review of marking patterns and outcome evidence — flagging inconsistencies, summarising cohort
+            performance, and drafting feedback for markers to check and approve.</p>
+        </div>
+        <div class="roadmap-card reveal">
+          <span class="soon">Coming soon</span>
+          <h3>Assessment duplication</h3>
+          <p>Clone a rubric, its evaluators, and its deadlines into a new term or section in one step — set it up once,
+            reuse it every offering.</p>
+        </div>
+        <div class="roadmap-card reveal">
+          <span class="soon">Coming soon</span>
+          <h3>Enhanced data import &amp; export</h3>
+          <p>Bulk-import students, lecturers, and rubric structures from spreadsheets, and export richer, ready-to-file
+            outcome reports beyond CSV.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING + REQUEST -->
+  <section class="cta-sec" id="pricing">
+    <div class="wrap">
+      <div class="cta-card reveal" id="request">
+        <div class="lead-col">
+          <span class="eyebrow">Pricing &amp; access</span>
+          <h2>Subscribe your course or programme.</h2>
+          <p>IAMS is available as a subscription for institutions, programmes, and courses. We are onboarding new users
+            now — tell us about your context and we will share pricing and set up a demo.</p>
+          <div class="price-line"><span class="p">Subscription</span><span class="s">institution &amp; course
+              plans</span></div>
+          <p class="f-note">No commitment — this starts a conversation, not a contract.</p>
+        </div>
+        <div class="form-col">
+          <form id="requestForm" action="https://api.yourdomain.com/api/request-demo" method="POST">
+            <div class="f-row">
+              <div><label for="name">Name</label><input id="name" name="name" required placeholder="Dr. Jane Doe" />
+              </div>
+              <div><label for="inst">Institution</label><input id="inst" name="inst" required
+                  placeholder="University of ..." /></div>
+            </div>
+            <div><label for="email">Email</label><input id="email" name="email" type="email" required
+                placeholder="you@university.edu" /></div>
+            <div><label for="msg">What would you use IAMS for? (optional)</label><textarea id="msg" name="msg"
+                placeholder="e.g. a team-based design course with peer and supervisor assessment"></textarea></div>
+            <input type="hidden" name="_subject" value="IAMS demo request" />
+            <button class="btn btn-teal" type="submit" style="justify-content:center;width:100%;padding:14px">Request a
+              demo</button>
+            <p class="f-note" id="formNote">Sends to the IAMS team at pyliew@utm.my. We reply personally.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <a class="brand" href="#top"><img src="IAMS_logo2.png" alt="IAMS — Integrated Assessment Management System"
+              class="brand-logo" /></a>
+          <p style="margin-top:12px;max-width:34ch;font-size:14px">Integrated Assessment Management System —
+            multi-perspective assessment, managed in one place.</p>
+        </div>
+        <div class="cols">
+          <div class="col">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a href="#who">Who it's for</a>
+            <a href="#pricing">Pricing</a>
+          </div>
+          <div class="col">
+            <h4>Contact</h4>
+            <a href="#request">Request a demo</a>
+            <a href="mailto:pyliew@utm.my">pyliew@utm.my</a>
+          </div>
+          <div class="col">
+            <h4>Origin</h4>
+            <span>MJIIT, Universiti</span>
+            <span>Teknologi Malaysia</span>
+          </div>
+        </div>
+      </div>
+      <div class="legal">
+        <span>&copy; 2026 IAMS · Integrated Assessment Management System.</span>
+        <span class="ip">Copyright IP/CR/08479 (2026) · Framework IP/CR/00663 (2021)</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+
+    // reveal on scroll (respect reduced motion)
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var els = document.querySelectorAll('.reveal');
+
+      function countUp(el) {
+        var target = parseInt(el.getAttribute('data-count'), 10);
+        if (!target && target !== 0) return;
+        if (reduce) { el.textContent = target; return; }
+        var start = null, duration = 1100;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach(function (e) {
+          e.classList.add('in');
+          var n = e.querySelector('[data-count]');
+          if (n) countUp(n);
+        });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            en.target.classList.add('in');
+            var n = en.target.querySelector('[data-count]');
+            if (n) countUp(n);
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: .14, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (e) { io.observe(e) });
+    })();
+
+    // mobile menu (simple: jump to nav sections list)
+    var burger = document.getElementById('burger');
+    if (burger) {
+      burger.addEventListener('click', function () {
+        document.getElementById('request').scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // Request form -> POSTs to a form-backend service (e.g. Formspree) which
+    // emails the submission straight to the IAMS team. No database or server
+    // code required. Sign up at https://formspree.io (or https://web3forms.com),
+    // then replace the form's "action" URL above with your own endpoint.
+    // If the service can't be reached (offline, ad-blocker, wrong endpoint),
+    // this falls back to opening a pre-filled email instead, so nothing is lost.
+    var form = document.getElementById('requestForm');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var note = document.getElementById('formNote');
+        var name = document.getElementById('name').value || '';
+        var inst = document.getElementById('inst').value || '';
+        var email = document.getElementById('email').value || '';
+        var msg = document.getElementById('msg').value || '';
+
+        function mailtoFallback() {
+          var subject = encodeURIComponent('IAMS demo request — ' + inst);
+          var bodyLines = [
+            'Name: ' + name,
+            'Institution: ' + inst,
+            'Email: ' + email,
+            '',
+            'Use case:',
+            msg
+          ].join('\n');
+          window.location.href = 'mailto:pyliew@utm.my?subject=' + subject + '&body=' + encodeURIComponent(bodyLines);
+        }
+
+        fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ name: name, inst: inst, email: email, msg: msg })
+        }).then(function (res) {
+          if (res.ok) {
+            form.reset();
+            if (note) {
+              note.textContent = "Thanks — we've received your request and will reply personally within 1–2 business days.";
+            }
+          } else {
+            throw new Error('form service unavailable');
+          }
+        }).catch(function () {
+          mailtoFallback();
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>
