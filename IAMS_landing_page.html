@@ -1039,59 +1039,78 @@
       position: absolute
     }
 
-    /* screenshots */
-    .shots {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px
+    /* carousel */
+    .carousel-container {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
     }
 
-    .shot-card {
+    .carousel-card {
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: 14px;
       overflow: hidden;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s
+      box-shadow: 0 18px 40px -24px rgba(45, 10, 18, .3);
     }
 
-    .shot-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px -24px rgba(45, 10, 18, .4);
-      border-color: var(--line-2)
-    }
-
-    .shot-card .image-placeholder {
-      transition: transform .4s ease
-    }
-
-    .shot-card:hover .image-placeholder {
-      transform: scale(1.04)
-    }
-
-    .image-placeholder {
+    .carousel-image {
+      position: relative;
       aspect-ratio: 16/10;
-      background:
-        repeating-linear-gradient(135deg, var(--surface-2) 0 10px, var(--surface) 10px 20px);
+      background: var(--surface-2);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      color: var(--muted);
-      border-bottom: 1px solid var(--line)
+      border-bottom: 1px solid var(--line);
     }
 
-    .image-placeholder svg {
-      width: 32px;
-      height: 32px;
-      opacity: .55
+    .carousel-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.3s ease;
     }
 
-    .image-placeholder span {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .06em;
-      text-transform: uppercase
+    .carousel-image img.fade-out {
+      opacity: 0;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(45, 10, 18, .15);
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+      z-index: 10;
+    }
+
+    .carousel-btn:hover {
+      background: var(--teal);
+      color: var(--white);
+      border-color: var(--teal-d);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .carousel-btn.prev {
+      left: 16px;
+    }
+
+    .carousel-btn.next {
+      right: 16px;
+    }
+
+    .carousel-btn svg {
+      width: 24px;
+      height: 24px;
     }
 
     .shot-meta {
@@ -1689,7 +1708,6 @@
       <div class="matrix reveal" aria-hidden="true">
         <div class="mhead">
           <b>Peer Assessment · Team 04</b>
-          <span class="tag">live demo</span>
         </div>
         <div class="roles">
           <span class="role on">Self</span>
@@ -1734,10 +1752,7 @@
           </div>
         </div>
 
-        <div class="mfoot">
-          <span class="chip">factor <b style="color:var(--teal-d)">1.08 ▲ reward</b></span>
-          <span class="chip amber">factor <b style="color:var(--amber-d)">0.86 ▼ penalty</b></span>
-        </div>
+
       </div>
     </div>
   </section>
@@ -1927,45 +1942,25 @@
           of their marks. Swap in your real screenshots any time by replacing the <code>.image-placeholder</code> blocks
           below.</p>
       </div>
-      <div class="shots">
-        <div class="shot-card reveal">
-          <div class="image-placeholder" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-7" />
-            </svg>
-            <span>Admin Image
-              <img src="/images/admin_home.png" alt="Admin Image" style="display: block;" />
-            </span>
+      <div class="carousel-container reveal" id="screenshot-carousel">
+        <div class="carousel-card">
+          <div class="carousel-image">
+            <img id="carousel-img" src="/images/admin_home.png" alt="Admin dashboard" />
+            <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button class="carousel-btn next" id="carousel-next" aria-label="Next image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
           </div>
-          <div class="shot-meta"><b>Admin dashboard</b><span>Course-scoped setup, progress tracking, and data exports
-              at a glance.</span></div>
-        </div>
-        <div class="shot-card reveal">
-          <div class="image-placeholder" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M3 9h18M9 15h6M9 12h3" />
-            </svg>
-            <span>Assesor Image
-              <img src="/images/assessor_home.png" alt="Assesor Image" style="display: block;" />
-            </span>
+          <div class="shot-meta">
+            <b id="carousel-title">Admin dashboard</b>
+            <span id="carousel-desc">Course-scoped setup, progress tracking, and data exports at a glance.</span>
           </div>
-          <div class="shot-meta"><b>Assessor workspace</b><span>Granular rubric grading with group and individual
-              evaluation tracking.</span></div>
-        </div>
-        <div class="shot-card reveal">
-          <div class="image-placeholder" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <circle cx="9" cy="8" r="3" />
-              <circle cx="17" cy="10" r="2.4" />
-              <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 1-3.6 2.5-4.6" />
-            </svg>
-            <span>Student Image
-              <img src="/images/student_home.png" alt="Student Image" style="display: block;" />
-            </span>
-          </div>
-          <div class="shot-meta"><b>Student portal</b><span>Self, peer, and group assessment in one dedicated
-              view.</span></div>
         </div>
       </div>
     </div>
@@ -2077,7 +2072,7 @@
           <p class="f-note">No commitment — this starts a conversation, not a contract.</p>
         </div>
         <div class="form-col">
-          <form id="requestForm" action="https://api.yourdomain.com/api/request-demo" method="POST">
+          <form id="requestForm" action="/api/request-demo" method="POST">
             <div class="f-row">
               <div><label for="name">Name</label><input id="name" name="name" required placeholder="Dr. Jane Doe" />
               </div>
@@ -2091,7 +2086,7 @@
             <input type="hidden" name="_subject" value="IAMS demo request" />
             <button class="btn btn-teal" type="submit" style="justify-content:center;width:100%;padding:14px">Request a
               demo</button>
-            <p class="f-note" id="formNote">Sends to the IAMS team at pyliew@utm.my. We reply personally.</p>
+            <p class="f-note" id="formNote">Sends to the IAMS team at eduinnovax@gmail.com. We reply personally.</p>
           </form>
         </div>
       </div>
@@ -2119,7 +2114,7 @@
           <div class="col">
             <h4>Contact</h4>
             <a href="#request">Request a demo</a>
-            <a href="mailto:pyliew@utm.my">pyliew@utm.my</a>
+            <a href="mailto:eduinnovax@gmail.com">eduinnovax@gmail.com</a>
           </div>
           <div class="col">
             <h4>Origin</h4>
@@ -2138,7 +2133,65 @@
   <script>
     document.documentElement.classList.add('js');
 
-    // reveal on scroll (respect reduced motion)
+    // Screenshot Carousel Logic
+    (function() {
+      var slides = [
+        {
+          src: '/images/admin_home.png',
+          alt: 'Admin dashboard',
+          title: 'Admin dashboard',
+          desc: 'Course-scoped setup, progress tracking, and data exports at a glance.'
+        },
+        {
+          src: '/images/assessor_home.png',
+          alt: 'Assessor workspace',
+          title: 'Assessor workspace',
+          desc: 'Granular rubric grading with group and individual evaluation tracking.'
+        },
+        {
+          src: '/images/student_home.png',
+          alt: 'Student portal',
+          title: 'Student portal',
+          desc: 'Self, peer, and group assessment in one dedicated view.'
+        }
+      ];
+
+      var currentIndex = 0;
+      var imgEl = document.getElementById('carousel-img');
+      var titleEl = document.getElementById('carousel-title');
+      var descEl = document.getElementById('carousel-desc');
+      var prevBtn = document.getElementById('carousel-prev');
+      var nextBtn = document.getElementById('carousel-next');
+
+      if (!imgEl) return;
+
+      function updateSlide(index) {
+        var slide = slides[index];
+        // Fade out
+        imgEl.classList.add('fade-out');
+        
+        setTimeout(function() {
+          // Update content
+          imgEl.src = slide.src;
+          imgEl.alt = slide.alt;
+          titleEl.textContent = slide.title;
+          descEl.textContent = slide.desc;
+          
+          // Fade in
+          imgEl.classList.remove('fade-out');
+        }, 300); // matches the 0.3s transition in CSS
+      }
+
+      prevBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlide(currentIndex);
+      });
+
+      nextBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlide(currentIndex);
+      });
+    })();    // reveal on scroll (respect reduced motion)
     (function () {
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var els = document.querySelectorAll('.reveal');
@@ -2213,7 +2266,7 @@
             'Use case:',
             msg
           ].join('\n');
-          window.location.href = 'mailto:pyliew@utm.my?subject=' + subject + '&body=' + encodeURIComponent(bodyLines);
+          window.location.href = 'mailto:eduinnovax@gmail.com?subject=' + subject + '&body=' + encodeURIComponent(bodyLines);
         }
 
         fetch(form.action, {

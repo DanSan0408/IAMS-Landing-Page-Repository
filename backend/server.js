@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path');
 const db = require('./db');
 
 const app = express();
@@ -11,6 +12,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies if needed
+
+// Serve static frontend files from the parent directory
+app.use(express.static(path.join(__dirname, '../')));
+
+// Serve the landing page when visiting the root URL
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../IAMS_landing_page.html'));
+});
 
 // Nodemailer Transporter Setup for Brevo SMTP
 const transporter = nodemailer.createTransport({
@@ -42,7 +51,7 @@ app.post('/api/request-demo', (req, res) => {
     // Prepare email
     const mailOptions = {
       from: process.env.BREVO_SMTP_USER, // Must be a verified sender in Brevo
-      to: 'pyliew@utm.my', // The admin email specified in the UI
+      to: 'eduinnovax@gmail.com', // The admin email specified in the UI
       subject: 'New IAMS Demo Request',
       text: `You have received a new demo request for IAMS:\n\nName: ${name}\nInstitution: ${inst}\nEmail: ${email}\nMessage: ${msg || 'N/A'}\n\nThis request has been saved to your database.`
     };
