@@ -13,12 +13,12 @@ app.use(cors());
 app.use(express.json()); // To parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies if needed
 
-// Serve static frontend files from the parent directory
-app.use(express.static(path.join(__dirname, '../')));
+// Serve static frontend files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve the landing page when visiting the root URL
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../IAMS_landing_page.html'));
+  res.sendFile(path.join(__dirname, 'public', 'IAMS_landing_page.html'));
 });
 
 // Nodemailer Transporter Setup for Brevo SMTP
