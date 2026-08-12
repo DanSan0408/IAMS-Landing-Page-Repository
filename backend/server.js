@@ -51,7 +51,7 @@ app.post('/api/request-demo', (req, res) => {
     // Prepare email
     const mailOptions = {
       from: process.env.BREVO_SMTP_USER, // Must be a verified sender in Brevo
-      to: 'pyliew@utm.my', // The admin email specified in the UI
+      to: 'pyliew@utm.my', // The admin email
       subject: 'New IAMS Demo Request',
       text: `You have received a new demo request for IAMS:\n\nName: ${name}\nInstitution: ${inst}\nEmail: ${email}\nMessage: ${msg || 'N/A'}\n\nThis request has been saved to your database.`
     };
