@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.BREVO_SMTP_USER, // Your Brevo login email
+    user: process.env.BREVO_SMTP_LOGIN, // Your Brevo login email
     pass: process.env.BREVO_SMTP_KEY   // Your Brevo SMTP key
   }
 });
@@ -50,7 +50,7 @@ app.post('/api/request-demo', (req, res) => {
 
     // Prepare email
     const mailOptions = {
-      from: process.env.BREVO_SMTP_USER, // Must be a verified sender in Brevo
+      from: process.env.BREVO_SENDER_EMAIL, // Must be a verified sender in Brevo
       to: 'pyliew@utm.my', // The admin email
       subject: 'New IAMS Demo Request',
       text: `You have received a new demo request for IAMS:\n\nName: ${name}\nInstitution: ${inst}\nEmail: ${email}\nMessage: ${msg || 'N/A'}\n\nThis request has been saved to your database.`
