@@ -637,6 +637,7 @@
             form.reset();
             if (note) {
               note.textContent = "Thanks — we've received your request and will reply personally within 1–2 business days.";
+              note.classList.add("success-anim");
             }
           } else {
             throw new Error('form service unavailable');
