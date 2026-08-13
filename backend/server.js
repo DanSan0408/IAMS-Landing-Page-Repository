@@ -60,14 +60,12 @@ app.post('/api/request-demo', (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email:', error);
-        // Even if email fails, we saved it to DB, so we can still return success (or a partial success).
-        // For simplicity, we return success but log the error.
+        return res.status(500).json({ success: false, error: 'Failed to send email. Please check your SMTP configuration.' });
       } else {
         console.log('Email sent:', info.response);
+        return res.status(200).json({ success: true, message: 'Request submitted successfully.' });
       }
     });
-
-    res.status(200).json({ success: true, message: 'Request submitted successfully.' });
   });
 });
 

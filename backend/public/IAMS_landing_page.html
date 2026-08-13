@@ -428,6 +428,7 @@
           <p class="f-note">No commitment --> this starts a conversation, not a contract.</p>
         </div>
         <div class="form-col">
+          <div id="formNotification" style="display: none; padding: 14px; border-radius: 8px; font-weight: bold; margin-bottom: 16px; text-align: center;"></div>
           <form id="requestForm" action="/api/request-demo" method="POST">
             <div class="f-row">
               <div><label for="name">Name</label><input id="name" name="name" required placeholder="Dr. Jane Doe" />
@@ -633,14 +634,18 @@
           },
           body: JSON.stringify({ name: name, inst: inst, email: email, msg: msg })
         }).then(function (res) {
+          var notification = document.getElementById('formNotification');
+          notification.style.display = 'block';
+          
           if (res.ok) {
             form.reset();
-            if (note) {
-              note.textContent = "Thanks — we've received your request and will reply personally within 1–2 business days.";
-              note.classList.add("success-anim");
-            }
+            notification.style.backgroundColor = '#d4edda';
+            notification.style.color = '#155724';
+            notification.textContent = "Success: We've received your request and will reply personally within 1–2 business days.";
           } else {
-            throw new Error('form service unavailable');
+            notification.style.backgroundColor = '#f8d7da';
+            notification.style.color = '#721c24';
+            notification.textContent = "Error: Failed to send demo request email.";
           }
         }).catch(function () {
           mailtoFallback();
