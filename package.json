@@ -1,0 +1,11 @@
+{
+  "name": "iams-landing-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IAMS Landing Page and Demo Request Service",
+  "scripts": {
+    "start": "npm start --prefix backend",
+    "dev": "npm run dev --prefix backend"
+  }
+}
+

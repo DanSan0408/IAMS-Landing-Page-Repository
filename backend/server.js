@@ -1,17 +1,57 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const nodemailer = require('nodemailer');
-const path = require('path');
 const db = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
-app.use(express.json()); // To parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies if needed
+// Security: Disable X-Powered-By header
+app.disable('x-powered-by');
+
+// Trust reverse proxy (Dokploy, Nginx, Render, etc.) when running in production
+if (process.env.NODE_ENV === 'production' || process.env.TRUST_PROXY === 'true') {
+  app.set('trust proxy', 1);
+}
+
+// Security: HTTP headers & Content Security Policy via Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"]
+      }
+    }
+  })
+);
+
+// CORS configuration (allow restricting via CORS_ORIGIN environment variable)
+const corsOptions = process.env.CORS_ORIGIN
+  ? { origin: process.env.CORS_ORIGIN.split(',').map((o) => o.trim()) }
+  : {};
+app.use(cors(corsOptions));
+
+// Body parsing with payload size limits (prevents payload DoS)
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: false, limit: '10kb' }));
+
+// Rate limiter for demo request endpoint: max 10 requests per 15 min window per IP
+const demoRequestLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests from this IP. Please try again later.' }
+});
 
 // Serve static frontend files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -32,17 +72,49 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Endpoint to handle demo requests
-app.post('/api/request-demo', (req, res) => {
+// Endpoint to handle demo requests with rate limiting and input validation
+app.post('/api/request-demo', demoRequestLimiter, (req, res) => {
   const { name, inst, email, msg } = req.body;
 
-  if (!name || !inst || !email) {
+  // Strict type checking
+  if (
+    typeof name !== 'string' ||
+    typeof inst !== 'string' ||
+    typeof email !== 'string' ||
+    (msg !== undefined && msg !== null && typeof msg !== 'string')
+  ) {
+    return res.status(400).json({ error: 'Invalid field types.' });
+  }
+
+  const trimmedName = name.trim();
+  const trimmedInst = inst.trim();
+  const trimmedEmail = email.trim();
+  const trimmedMsg = (msg || '').trim();
+
+  // Required field checks
+  if (!trimmedName || !trimmedInst || !trimmedEmail) {
     return res.status(400).json({ error: 'Name, Institution, and Email are required.' });
   }
 
-  // Insert into SQLite database
+  // Length limits to prevent DoS / buffer overflow
+  if (
+    trimmedName.length > 100 ||
+    trimmedInst.length > 200 ||
+    trimmedEmail.length > 254 ||
+    trimmedMsg.length > 2000
+  ) {
+    return res.status(400).json({ error: 'Input exceeded maximum allowed length.' });
+  }
+
+  // Email format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(trimmedEmail)) {
+    return res.status(400).json({ error: 'Invalid email address format.' });
+  }
+
+  // Insert into SQLite database (parameterized query)
   const sql = `INSERT INTO demo_requests (name, institution, email, message) VALUES (?, ?, ?, ?)`;
-  db.run(sql, [name, inst, email, msg], function(err) {
+  db.run(sql, [trimmedName, trimmedInst, trimmedEmail, trimmedMsg], function(err) {
     if (err) {
       console.error('Database error:', err);
       return res.status(500).json({ error: 'Failed to save request.' });
@@ -53,7 +125,7 @@ app.post('/api/request-demo', (req, res) => {
       from: process.env.BREVO_SENDER_EMAIL, // Must be a verified sender in Brevo
       to: 'pyliew@utm.my', // The admin email
       subject: 'New IAMS Demo Request',
-      text: `You have received a new demo request for IAMS:\n\nName: ${name}\nInstitution: ${inst}\nEmail: ${email}\nMessage: ${msg || 'N/A'}\n\nThis request has been saved to your database.`
+      text: `You have received a new demo request for IAMS:\n\nName: ${trimmedName}\nInstitution: ${trimmedInst}\nEmail: ${trimmedEmail}\nMessage: ${trimmedMsg || 'N/A'}\n\nThis request has been saved to your database.`
     };
 
     // Send email

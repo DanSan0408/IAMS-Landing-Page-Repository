@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IAMS — Multi-perspective assessment, managed in one place</title>
+  <title>IAMS, Multi-perspective assessment, managed in one place</title>
   <meta name="description"
-    content="IAMS runs any rubric- or checklist-based assessment across self, peer, group, and assessor evaluations — computing individual contribution, returning feedback, and producing auditable outcome evidence." />
+    content="IAMS runs any rubric- or checklist-based assessment across self, peer, group, and assessor evaluations, computing individual contribution, returning feedback, and producing auditable outcome evidence." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -20,21 +20,20 @@
   <header class="nav">
     <div class="wrap nav-in">
       <a class="brand" href="#top" aria-label="IAMS home">
-        <img src="IAMS_logo2.png" alt="IAMS — Integrated Assessment Management System" class="brand-logo" />
+        <img src="IAMS_logo2.png" alt="IAMS, Integrated Assessment Management System" class="brand-logo" />
       </a>
-      <nav class="nav-links" aria-label="Primary">
+      <nav class="nav-links" id="primary-nav" aria-label="Primary">
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
         <a href="#screenshots">Screenshots</a>
-        <a href="#who">Who it's for</a>
+        <a href="#who">Who it’s for</a>
         <a href="#proof">Proof</a>
         <a href="#roadmap">Roadmap</a>
         <a href="#pricing">Pricing</a>
       </nav>
       <div class="nav-cta">
-        <a class="btn btn-ghost" href="#pricing">Pricing</a>
-        <a class="btn btn-primary" href="#request">Request a demo</a>
-        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span> </button>
+        <a class="btn btn-primary" href="https://iams.eduinnovax.com/">Open IAMS <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 4h6v6M20 4l-11 11M10 4H4v16h16v-6" /></svg></a>
+        <button class="burger" id="burger" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav" hidden><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
@@ -43,26 +42,25 @@
 
   <!-- HERO -->
   <section class="hero" style="padding:0">
+    <div class="hero-atmosphere" aria-hidden="true"><span class="hero-trace trace-top"></span><span class="hero-trace trace-bottom"></span></div>
     <div class="wrap hero-in">
       <div class="hero-copy">
-        <span class="eyebrow">Multi-perspective assessment platform</span>
-        <h1>Every marker, every rubric, <span class="u">one honest mark.</span></h1>
-        <p class="lead">Self, peers, and assessors each grade through their own configurated rubric wiht multiple
-          options such as sub-criteria, direct
-          ratings, and also open comments while a contribution factor rewards students who pull their weight and marks
-          down the ones who don't.
-        </p>
+        <h1><span class="heading-line"><span>Every perspective.</span></span><span class="heading-line"><span>One honest mark.</span></span></h1>
+        <p class="lead">Rubrics, contribution and feedback, managed together for fairer academic assessment.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#request">Request a demo</a>
-          <a class="btn btn-ghost" href="#how">See how it works</a>
+          <a class="btn btn-primary" href="https://iams.eduinnovax.com/">Open IAMS <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 4h6v6M20 4l-11 11M10 4H4v16h16v-6" /></svg></a>
+          <a class="btn btn-ghost" href="#request">Request a demo</a>
         </div>
-        <p class="hero-note">Multiple roles · Complex rubrics · Built-in comments · Rewards and penalises fairly</p>
+        <a class="hero-explore" href="#how">Explore the assessment process <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v16m-6-6 6 6 6-6" /></svg></a>
       </div>
 
-      <div class="matrix reveal" aria-hidden="true">
+      <div class="matrix-stage">
+      <div class="matrix reveal" role="group" aria-label="Interactive assessment example">
         <div class="mhead">
-          <b>Peer Assessment · Team 04</b>
+          <b>Peer assessment example</b>
+          <button class="walkthrough-control" type="button" id="play-walkthrough" hidden aria-label="Replay assessment example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6" /></svg><span>Replay example</span></button>
         </div>
+        <p class="preview-hint">Try a rating. Explore how marking feels.</p>
         <div class="roles">
           <span class="role on">Self</span>
           <span class="role on">Peer</span>
@@ -71,42 +69,39 @@
         </div>
 
         <div class="demo-stage">
-          <svg class="demo-cursor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 2.4 18.6 9l-6.1 1.9-2 6.1L4 2.4z" fill="#2A1015" stroke="#fff" stroke-width="1.3"
-              stroke-linejoin="round" />
-          </svg>
-
           <div class="demo-q">
-            <span class="demo-qlabel">Q2 · Direct rating</span>
+            <span class="demo-qlabel">Q2: Direct rating</span>
             <p>Contributed effectively to the mechanical design work</p>
-            <div class="rate-row">
-              <span class="rate-pill">1</span>
-              <span class="rate-pill">2</span>
-              <span class="rate-pill">3</span>
-              <span class="rate-pill hit1">4</span>
-              <span class="rate-pill">5</span>
+            <div class="rate-row" role="group" aria-label="Choose a rating">
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 1 out of 5">1</button>
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 2 out of 5">2</button>
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 3 out of 5">3</button>
+              <button type="button" class="rate-pill selected" aria-pressed="true" aria-label="Rate 4 out of 5">4</button>
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 5 out of 5">5</button>
             </div>
           </div>
 
           <div class="demo-q">
-            <span class="demo-qlabel">Q3 · Sub-rubric</span>
+            <span class="demo-qlabel">Q3: Sub-rubric</span>
             <p>Communicated proactively with the rest of the team</p>
-            <div class="rate-row">
-              <span class="rate-pill">1</span>
-              <span class="rate-pill hit2">2</span>
-              <span class="rate-pill">3</span>
-              <span class="rate-pill">4</span>
-              <span class="rate-pill">5</span>
+            <div class="rate-row" role="group" aria-label="Choose a rating">
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 1 out of 5">1</button>
+              <button type="button" class="rate-pill selected" aria-pressed="true" aria-label="Rate 2 out of 5">2</button>
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 3 out of 5">3</button>
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 4 out of 5">4</button>
+              <button type="button" class="rate-pill" aria-pressed="false" aria-label="Rate 5 out of 5">5</button>
             </div>
           </div>
 
           <div class="demo-comment">
             <span class="c-label">Comment</span>
-            Delivered the gearbox redesign a week early<span class="caret">|</span>
+            <span class="comment-copy">Delivered the gearbox redesign a week early</span>
           </div>
         </div>
-
-
+        <p class="preview-result" role="status" aria-live="polite">Example only. Your changes are not saved.</p>
+        <div class="walkthrough-track" aria-hidden="true"><span></span></div>
+        <div class="evaluation-cursor" aria-hidden="true"><svg viewBox="0 0 28 32" fill="none"><path d="M3 2v23l6-6 5 10 5-2-5-10h10L3 2Z" /></svg><span class="cursor-click"></span></div>
+      </div>
       </div>
     </div>
   </section>
@@ -116,7 +111,6 @@
     <div class="wrap">
       <div class="grid">
         <div class="sec-head reveal" style="margin-bottom:0">
-          <span class="eyebrow">The problem</span>
           <h2>Great assessment is hard to run.</h2>
           <p>Projects, presentations, portfolios, and peer review capture what exams cannot. But they are heavy to
             operate and the logistics, not the education, are where courses get stuck.</p>
@@ -139,7 +133,6 @@
   <section id="how">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">The platform</span>
         <h2>IAMS does the running. You keep the judgement.</h2>
         <p>Configure any assessment you can express as a rubric or checklist. IAMS collects the marks from every
           evaluator, reveals individual contribution, returns feedback, supports moderation, and exports auditable
@@ -175,9 +168,8 @@
   <section id="features" style="background:var(--surface)">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">What you get</span>
         <h2>Everything a multi-marker assessment needs.</h2>
-        <p>One configurable engine, set up entirely by you — no fixed template, no discipline lock-in.</p>
+        <p>One configurable engine, set up entirely by you, no fixed template, no discipline lock-in.</p>
       </div>
       <div class="feat">
         <div class="card reveal">
@@ -247,13 +239,12 @@
   <section class="who" id="who">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">Who it's for</span>
         <h2>If you can write a rubric, IAMS can run it.</h2>
         <p>Any discipline, anywhere. IAMS handles any human-evaluated assessment you can express as a rubric or
           checklist.</p>
       </div>
       <div class="tag-group reveal">
-        <h4>Projects &amp; assessments</h4>
+        <h3>Projects &amp; assessments</h3>
         <div class="tags">
           <span>Design &amp; capstone projects</span>
           <span>Final year projects</span>
@@ -272,7 +263,7 @@
         </div>
       </div>
       <div class="tag-group reveal">
-        <h4>Where it's used</h4>
+        <h3>Where it’s used</h3>
         <div class="tags">
           <span>Universities &amp; polytechnics</span>
           <span>Technical &amp; vocational colleges</span>
@@ -291,27 +282,32 @@
   <section id="screenshots" style="background:var(--surface)">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">See it in action</span>
         <h2>Every portal, purpose-built for the role using it.</h2>
-        <p>A quick look at three core workspaces inside IAMS — from the admin's live dashboard to the student's own view
+        <p>A quick look at three core workspaces inside IAMS, from the admin’s live dashboard to the student’s own view
           of their marks.</p>
       </div>
-      <div class="carousel-container reveal" id="screenshot-carousel">
+      <div class="carousel-container reveal" id="screenshot-carousel" role="region" aria-label="IAMS product screenshots" aria-roledescription="carousel">
+        <div class="portal-selector" role="group" aria-label="Choose a portal" hidden>
+          <button type="button" data-slide="0" aria-pressed="true">Admin dashboard</button>
+          <button type="button" data-slide="1" aria-pressed="false">Assessor workspace</button>
+          <button type="button" data-slide="2" aria-pressed="false">Student portal</button>
+        </div>
         <div class="carousel-card">
           <div class="carousel-image">
             <img id="carousel-img" src="images/admin_home.png" alt="Admin dashboard" />
-            <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous image">
+            <button class="screenshot-expand" id="expand-screenshot" type="button" hidden aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M3 3l6 6m12-6-6 6M3 21l6-6m12 6-6-6" /></svg>Enlarge screenshot</button>
+            <button class="carousel-btn prev" hidden id="carousel-prev" aria-label="Previous image">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
-            <button class="carousel-btn next" id="carousel-next" aria-label="Next image">
+            <button class="carousel-btn next" hidden id="carousel-next" aria-label="Next image">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
           </div>
-          <div class="shot-meta">
+          <div class="shot-meta" aria-live="polite" aria-atomic="true">
             <b id="carousel-title">Admin dashboard</b>
             <span id="carousel-desc">Course-scoped setup, progress tracking, and data exports at a glance.</span>
           </div>
@@ -324,7 +320,6 @@
   <section class="proof" id="proof">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">Proven in practice</span>
         <h2>Built and tested in a real, high-stakes course.</h2>
         <p>IAMS was first deployed to manage the complete assessment of an engineering capstone for every perspective,
           in
@@ -332,37 +327,71 @@
       </div>
       <div class="stats">
         <div class="stat reveal">
-          <div class="num" data-count="47">0</div>
+          <div class="num" data-count="47">47</div>
           <div class="lab">students assessed</div>
         </div>
         <div class="stat reveal">
-          <div class="num" data-count="34">0</div>
+          <div class="num" data-count="34">34</div>
           <div class="lab">evaluators, overlapping roles</div>
         </div>
         <div class="stat reveal">
-          <div class="num" data-count="4">0</div>
+          <div class="num" data-count="4">4</div>
           <div class="lab">evaluator perspectives</div>
         </div>
         <div class="stat reveal">
-          <div class="num" data-count="1">0</div>
+          <div class="num" data-count="1">1</div>
           <div class="lab">auditable outcome record</div>
         </div>
       </div>
-      <div class="band">
-        <div class="provenance reveal">
+      <div class="evidence-layout">
+        <div class="evidence-intro">
+          <svg class="award-seal" viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="40" cy="34" r="29" /><circle cx="40" cy="34" r="23" /><path d="m40 20 4.4 9 10 1.5-7.2 7 1.7 10-8.9-4.7-8.9 4.7 1.7-10-7.2-7 10-1.5L40 20ZM21 57l-5 32 16-8 8 10 5-28M59 57l5 32-16-8-3 4" /></svg>
           <h3>A tested foundation, not a prototype</h3>
-          <ul>
-            <li><b>2025</b><span>Assessment framework registered as copyright (IP/CR/00663).</span></li>
-            <li><b>2026</b><span>Multi-perspective approach presented at NALI 2026.</span></li>
-            <li><b>2026</b><span>IAMS software released under copyright (IP/CR/08479).</span></li>
-          </ul>
+          <p>From capstone assessment innovation to the IAMS source code.</p>
+          <nav class="milestone-nav" aria-label="Jump to a milestone">
+            <a href="#milestone-2020">2020</a>
+            <a href="#milestone-2022-framework">2022</a>
+            <a href="#milestone-2023">2023</a>
+            <a href="#milestone-2026">2026</a>
+          </nav>
         </div>
-        <div class="quote reveal">
-          <div class="q">&ldquo;A very easy external management system with intricate functions that can accomodate
-            complex rubric designs and as well as promote accountability for the students.&rdquo;</div>
-          <div class="ph">Lecturer/Admin from Top IPTA University In Malaysia</div>
-        </div>
+        <ol class="milestones" aria-label="Awards and intellectual property timeline">
+          <li id="milestone-2020" class="milestone">
+            <time datetime="2020">2020</time>
+            <div><span class="milestone-kind">Gold medal</span>
+              <h4>Innovative Chemical Plant Design Capstone Project</h4>
+              <p>GOLD MEDAL in New Academia Learning Innovation (NALI2020) Exhibition and Competition.</p></div>
+          </li>
+          <li id="milestone-2022-framework" class="milestone">
+            <time datetime="2022">2022</time>
+            <div><span class="milestone-kind">Copyright registration</span>
+              <h4>Design and Evaluation Framework for Chemical Plant Design Project</h4>
+              <p>Registered as a copyright (<span class="registration">IP/CR/00663</span>).</p></div>
+          </li>
+          <li id="milestone-2022-award" class="milestone">
+            <time datetime="2022">2022</time>
+            <div><span class="milestone-kind">Gold medal</span>
+              <h4>Holistic Assessment for Chemical Plant Design Capstone Project</h4>
+              <p>GOLD MEDAL in New Academia Learning Innovation (NALI2022) Exhibition and Competition.</p></div>
+          </li>
+          <li id="milestone-2023" class="milestone">
+            <time datetime="2023">2023</time>
+            <div><span class="milestone-kind">NALI Award 2023</span>
+              <h4>Chemical Plant Design Project for Future Ready Holistic Chemical Engineering Graduate</h4>
+              <p>NALI AWARD 2023 in New Academia Learning Innovation (NALI2023).</p></div>
+          </li>
+          <li id="milestone-2026" class="milestone">
+            <time datetime="2026">2026</time>
+            <div><span class="milestone-kind">Copyright registration</span>
+              <h4>Source Code for the Integrated Assessment Management System</h4>
+              <p>Registered under copyright (<span class="registration">LY2026E07181</span>).</p></div>
+          </li>
+        </ol>
       </div>
+      <figure class="quote">
+        <blockquote class="q">&ldquo;A very easy external management system with intricate functions that can accommodate complex rubric designs and as well as promote accountability for the students.&rdquo;</blockquote>
+        <figcaption class="ph">Lecturer/Admin from a top public university in Malaysia</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -380,28 +409,27 @@
   <section id="roadmap">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">What's next</span>
         <h2>Built to grow with your programme.</h2>
-        <p>IAMS is under active development. Here's what's coming next to deepen the insight you get from every
+        <p>IAMS is under active development. Here’s what’s coming next to deepen the insight you get from every
           assessment.</p>
       </div>
       <div class="roadmap-grid">
         <div class="roadmap-card reveal">
           <span class="soon">Coming soon</span>
           <h3>Advanced data analytics</h3>
-          <p>Cohort comparisons, attainment trends across terms, and configurable dashboards that go beyond today's
+          <p>Cohort comparisons, attainment trends across terms, and configurable dashboards that go beyond today’s
             spreadsheet exports.</p>
         </div>
         <div class="roadmap-card reveal">
           <span class="soon">Coming soon</span>
           <h3>AI-based assessment analysis</h3>
-          <p>AI-assisted review of marking patterns and outcome evidence — flagging inconsistencies, summarising cohort
+          <p>AI-assisted review of marking patterns and outcome evidence, flagging inconsistencies, summarising cohort
             performance, and drafting feedback for markers to check and approve.</p>
         </div>
         <div class="roadmap-card reveal">
           <span class="soon">Coming soon</span>
           <h3>Assessment duplication</h3>
-          <p>Clone a rubric, its evaluators, and its deadlines into a new term or section in one step — set it up once,
+          <p>Clone a rubric, its evaluators, and its deadlines into a new term or section in one step, set it up once,
             reuse it every offering.</p>
         </div>
         <div class="roadmap-card reveal">
@@ -419,16 +447,15 @@
     <div class="wrap">
       <div class="cta-card reveal" id="request">
         <div class="lead-col">
-          <span class="eyebrow">Pricing &amp; access</span>
           <h2>Subscribe your course or programme.</h2>
           <p>IAMS is available as a subscription for institutions, programmes, and courses. We are onboarding new users
             now. Tell us about your context and we will share pricing and set up a demo.</p>
           <div class="price-line"><span class="p">Subscription</span><span class="s">institution &amp; course
               plans</span></div>
-          <p class="f-note">No commitment --> this starts a conversation, not a contract.</p>
+          <p class="f-note">No commitment. This starts a conversation, not a contract.</p>
         </div>
         <div class="form-col">
-          <div id="formNotification" style="display: none; padding: 14px; border-radius: 8px; font-weight: bold; margin-bottom: 16px; text-align: center;"></div>
+          <div id="formNotification" role="status" aria-live="polite" style="display: none; padding: 14px; border-radius: 8px; font-weight: bold; margin-bottom: 16px; text-align: center;"></div>
           <form id="requestForm" action="/api/request-demo" method="POST">
             <div class="f-row">
               <div><label for="name">Name</label><input id="name" name="name" required placeholder="Dr. Jane Doe" />
@@ -455,154 +482,47 @@
     <div class="wrap">
       <div class="top">
         <div>
-          <a class="brand" href="#top"><img src="IAMS_logo2.png" alt="IAMS — Integrated Assessment Management System"
+          <a class="brand" href="#top"><img src="IAMS_logo2.png" alt="IAMS, Integrated Assessment Management System"
               class="brand-logo" /></a>
           <p style="margin-top:12px;max-width:34ch;font-size:14px">Integrated Assessment Management System
             multi-perspective assessment, managed in one place.</p>
         </div>
         <div class="cols">
           <div class="col">
-            <h4>Product</h4>
+            <h3>Product</h3>
             <a href="#features">Features</a>
             <a href="#how">How it works</a>
-            <a href="#who">Who it's for</a>
+            <a href="#who">Who it’s for</a>
             <a href="#pricing">Pricing</a>
           </div>
           <div class="col">
-            <h4>Contact</h4>
+            <h3>Contact</h3>
             <a href="#request">Request a demo</a>
+            <a href="https://iams.eduinnovax.com/">Open IAMS</a>
             <a href="mailto:eduinnovax@gmail.com">eduinnovax@gmail.com</a>
           </div>
           <div class="col">
-            <h4>Origin</h4>
+            <h3>Origin</h3>
             <span>MJIIT, Universiti</span>
             <span>Teknologi Malaysia</span>
           </div>
         </div>
       </div>
       <div class="legal">
-        <span>&copy; 2026 IAMS · Integrated Assessment Management System.</span>
-        <span class="ip">Copyright IP/CR/08479 (2026) · Framework IP/CR/00663 (2021)</span>
+        <span>&copy; 2026 IAMS. Integrated Assessment Management System.</span>
+        <span class="ip">Source code LY2026E07181 (2026)<br>Framework IP/CR/00663 (2022)</span>
       </div>
     </div>
   </footer>
 
+  <dialog class="screenshot-dialog" id="screenshot-dialog" aria-labelledby="screenshot-dialog-title">
+    <div class="dialog-toolbar"><h2 id="screenshot-dialog-title">Admin dashboard</h2><button type="button" id="close-screenshot" aria-label="Close enlarged screenshot">Close <span aria-hidden="true">×</span></button></div>
+    <img id="enlarged-screenshot" src="images/admin_home.png" alt="Admin dashboard" />
+  </dialog>
+
   <script>
-    document.documentElement.classList.add('js');
-
-    // Screenshot Carousel Logic
-    (function () {
-      var slides = [
-        {
-          src: 'images/admin_home.png',
-          alt: 'Admin dashboard',
-          title: 'Admin dashboard',
-          desc: 'Course-scoped setup, progress tracking, and data exports at a glance.'
-        },
-        {
-          src: 'images/assessor_home.png',
-          alt: 'Assessor workspace',
-          title: 'Assessor workspace',
-          desc: 'Granular rubric grading with group and individual evaluation tracking.'
-        },
-        {
-          src: 'images/student_home.png',
-          alt: 'Student portal',
-          title: 'Student portal',
-          desc: 'Self, peer, and group assessment in one dedicated view.'
-        }
-      ];
-
-      var currentIndex = 0;
-      var imgEl = document.getElementById('carousel-img');
-      var titleEl = document.getElementById('carousel-title');
-      var descEl = document.getElementById('carousel-desc');
-      var prevBtn = document.getElementById('carousel-prev');
-      var nextBtn = document.getElementById('carousel-next');
-
-      if (!imgEl) return;
-
-      function updateSlide(index) {
-        var slide = slides[index];
-        // Fade out
-        imgEl.classList.add('fade-out');
-
-        setTimeout(function () {
-          // Update content
-          imgEl.src = slide.src;
-          imgEl.alt = slide.alt;
-          titleEl.textContent = slide.title;
-          descEl.textContent = slide.desc;
-
-          // Fade in
-          imgEl.classList.remove('fade-out');
-        }, 300); // matches the 0.3s transition in CSS
-      }
-
-      prevBtn.addEventListener('click', function () {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateSlide(currentIndex);
-      });
-
-      nextBtn.addEventListener('click', function () {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateSlide(currentIndex);
-      });
-    })();    // reveal on scroll (respect reduced motion)
-    (function () {
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var els = document.querySelectorAll('.reveal');
-
-      function countUp(el) {
-        var target = parseInt(el.getAttribute('data-count'), 10);
-        if (!target && target !== 0) return;
-        if (reduce) { el.textContent = target; return; }
-        var start = null, duration = 1100;
-        function step(ts) {
-          if (!start) start = ts;
-          var p = Math.min((ts - start) / duration, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(eased * target);
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      if (reduce || !('IntersectionObserver' in window)) {
-        els.forEach(function (e) {
-          e.classList.add('in');
-          var n = e.querySelector('[data-count]');
-          if (n) countUp(n);
-        });
-        return;
-      }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) {
-            en.target.classList.add('in');
-            var n = en.target.querySelector('[data-count]');
-            if (n) countUp(n);
-            io.unobserve(en.target);
-          }
-        });
-      }, { threshold: .14, rootMargin: '0px 0px -40px 0px' });
-      els.forEach(function (e) { io.observe(e) });
-    })();
-
-    // mobile menu (simple: jump to nav sections list)
-    var burger = document.getElementById('burger');
-    if (burger) {
-      burger.addEventListener('click', function () {
-        document.getElementById('request').scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-
-    // Request form -> POSTs to a form-backend service (e.g. Formspree) which
-    // emails the submission straight to the IAMS team. No database or server
-    // code required. Sign up at https://formspree.io (or https://web3forms.com),
-    // then replace the form's "action" URL above with your own endpoint.
-    // If the service can't be reached (offline, ad-blocker, wrong endpoint),
-    // this falls back to opening a pre-filled email instead, so nothing is lost.
+    // Submit to the existing demo-request backend, with the existing email
+    // fallback when the request cannot reach the server.
     var form = document.getElementById('requestForm');
     if (form) {
       form.addEventListener('submit', function (e) {
@@ -614,7 +534,7 @@
         var msg = document.getElementById('msg').value || '';
 
         function mailtoFallback() {
-          var subject = encodeURIComponent('IAMS demo request — ' + inst);
+          var subject = encodeURIComponent('IAMS demo request, ' + inst);
           var bodyLines = [
             'Name: ' + name,
             'Institution: ' + inst,
@@ -639,12 +559,10 @@
           
           if (res.ok) {
             form.reset();
-            notification.style.backgroundColor = '#d4edda';
-            notification.style.color = '#155724';
+            notification.className = 'form-notification success';
             notification.textContent = "Success: We've received your request and will reply personally within 1–2 business days.";
           } else {
-            notification.style.backgroundColor = '#f8d7da';
-            notification.style.color = '#721c24';
+            notification.className = 'form-notification error';
             notification.textContent = "Error: Failed to send demo request email.";
           }
         }).catch(function () {
@@ -653,6 +571,7 @@
       });
     }
   </script>
+  <script src="interactions.js" defer></script>
 </body>
 
 </html>

@@ -1,0 +1,8 @@
+shots/
+before/
+before.json
+before.txt
+compare.html
+browser-tools/
+*.cjs
+qa.mjs

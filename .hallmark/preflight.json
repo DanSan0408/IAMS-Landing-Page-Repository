@@ -1,0 +1,27 @@
+{
+  "mode": "redesign",
+  "depth": "restyle",
+  "genre": "modern-minimal",
+  "theme": "brand",
+  "audience": "Academic assessors, course coordinators and institutions",
+  "action": "Open the live IAMS system or request a demo",
+  "tone": "Academic showcase: burgundy stage, ivory surfaces, gold award details and choreographed motion",
+  "preserved": [
+    "backend/public/style.css:1: existing burgundy, gold, Space Grotesk and Inter identity",
+    "backend/public/IAMS_landing_page.html:20: existing logo and navigation destinations",
+    "backend/public/IAMS_landing_page.html:285: real product screenshots",
+    "Existing form endpoint, fields and email fallback",
+    "Existing product sections, deployment figures and lecturer quote"
+  ],
+  "introduced": [
+    "Direct links to https://iams.eduinnovax.com/",
+    "Five awards and copyright milestones supplied by the user",
+    "Public university attribution",
+    "Selectable example ratings, mobile menu and finite motion",
+    "Replayable and stoppable assessment walkthrough",
+    "Gold award spine linked to scroll, staggered entrances and real-number ticks",
+    "Direct portal selectors and accessible screenshot enlargement"
+  ],
+  "workingTree": "Existing backend and dependency edits retained; frontend target files were initially clean",
+  "material": "Existing screenshots and logo, supplied milestone history; no generated imagery or invented evidence"
+}

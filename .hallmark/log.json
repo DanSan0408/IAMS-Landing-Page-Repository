@@ -1,0 +1,106 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "restyle",
+  "scope": "page",
+  "theme": "brand",
+  "genre": "modern-minimal",
+  "hero": "Stage",
+  "signature": "automatic cursor evaluation with rating clicks and typed feedback",
+  "entry": "backend/public/IAMS_landing_page.html",
+  "prompt": "Remove the global pause button and repeat a realistic mouse-driven assessment demonstration",
+  "motion": "Repeating 7.8-second cycle; pointer moves to measured button positions, clicks ratings and types the supplied comment; yields to direct input and keyboard focus; reduced-motion and offscreen support retained",
+  "verification": {
+   "floorFailures": 0,
+   "reflexFindings": 0,
+   "renderWarnings": 1,
+   "renderNotes": 5,
+   "browser": "PASS: removed pause button; measured cursor alignment; two rating clicks; typing; second automatic cycle; replay; direct ratings; five responsive widths; reduced motion; existing carousel, dialog, menu and mocked form",
+   "review": "in-thread; no visual defects; original content retained"
+  },
+  "date": "2026-10-26"
+ },
+ {
+  "mode": "redesign",
+  "depth": "restyle",
+  "scope": "page",
+  "theme": "brand",
+  "genre": "modern-minimal",
+  "shape": "academic product showcase",
+  "hero": "Stage",
+  "signature": "floating assessment stage, travelling gold accents and a connected assessment route",
+  "entry": "backend/public/IAMS_landing_page.html",
+  "prompt": "Add more animation for attraction while preserving the academic styling",
+  "verification": {
+   "floorFailures": 0,
+   "reflexFindings": 0,
+   "renderWarnings": 1,
+   "renderNotes": 5,
+   "browser": "passed: global pause/resume, walkthrough pause, offscreen loop suspension, reduced motion, five viewport widths, existing interactions, no-JS fallback, mocked form submission",
+   "review": "in-thread; no visual defects; original section count retained"
+  },
+  "motion": "slow ambient loops stop offscreen, on document hide, with reduced motion, or using the visible pause control",
+  "date": "2026-10-26"
+ },
+ {
+  "mode": "redesign",
+  "depth": "restyle",
+  "scope": "page",
+  "theme": "brand",
+  "genre": "modern-minimal",
+  "shape": "academic product showcase",
+  "hero": "Stage",
+  "nav": "preserved with direct IAMS access",
+  "footer": "preserved academic origin",
+  "signature": "replayable assessment walkthrough and gold award spine",
+  "imagery": "existing portal screenshots with accessible enlargement",
+  "entry": "backend/public/IAMS_landing_page.html",
+  "prompt": "Increase visual depth, interaction and animation for academic juries while retaining a professional academic style",
+  "waived": [
+   "24b: brand geometry",
+   "25: compact product captions",
+   "26b: existing request handler"
+  ],
+  "verification": {
+   "floorFailures": 0,
+   "reflexFindings": 0,
+   "staticWarnings": 0,
+   "staticNotes": 1,
+   "render": "five screenshots reviewed; zero failures; retained-section warnings accepted; static contrast false positive and typography warnings corrected",
+   "browser": "passed across five widths: rating selection, walkthrough play and stop, reduced-motion walkthrough, portal selection, keyboard carousel, screenshot dialog and Escape, menu, no-JS, mocked form submission",
+   "review": "in-thread; ship; no visual defects remaining",
+   "preserved": "12/12 existing links, 5/5 fields, 16/16 script hooks"
+  },
+  "date": "2026-10-26"
+ },
+ {
+  "mode": "redesign",
+  "depth": "restyle",
+  "scope": "page",
+  "theme": "brand",
+  "genre": "modern-minimal",
+  "shape": "existing product landing page",
+  "hero": "Stage",
+  "nav": "existing section links with direct system access",
+  "footer": "existing academic origin and corrected copyright references",
+  "signature": "interactive assessment example and documentary milestone timeline",
+  "imagery": "existing product screenshots",
+  "entry": "backend/public/IAMS_landing_page.html",
+  "prompt": "Direct IAMS access, supplied awards and copyright history, public university wording, professional academic interaction",
+  "waived": [
+   "24b: existing brand geometry",
+   "25: short captions",
+   "26b: retain existing form request handler"
+  ],
+  "verification": {
+   "floorFailures": 0,
+   "reflexFindings": 0,
+   "renderWarnings": 3,
+   "renderNotes": 5,
+   "browserChecks": "passed at 320, 375, 768, 1280 and 1920px; ratings, carousel, keyboard, navigation, reduced motion, mocked form, no-JS",
+   "review": "in-thread; corrected field contrast; original content retained; outlined secondary action verified visually",
+   "preserved": "12/12 links; 5/5 form fields; 16/16 script hooks"
+  },
+  "date": "2026-10-26"
+ }
+]
